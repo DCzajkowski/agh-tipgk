@@ -6,6 +6,7 @@ WINDOW_WIDTH = 640
 WINDOW_HEIGHT = 480
 BALL_RADIUS = 20
 FPS = 120
+PLATFORM_WIDTH = 100
 
 class Ball:
   def __init__(self, screen, x, y):
@@ -31,12 +32,30 @@ class Ball:
   def draw(self):
     pygame.draw.circle(self.screen, (255, 255, 255), self.position, BALL_RADIUS)
 
+class Platform:
+  def __init__(self, screen, x, y):
+    self.position = Vector2(x, y)
+    self.screen = screen
+
+  def update(self):
+    self.draw()
+
+  def draw(self):
+    pygame.draw.rect(self.screen, (255, 255, 255), (self.position.x, self.position.y, PLATFORM_WIDTH, 5))
+
 def main():
   pygame.init()
   screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
   clock = Clock()
+
   ball = Ball(screen, WINDOW_WIDTH / 2, WINDOW_HEIGHT - BALL_RADIUS)
+  platforms = [
+    Platform(screen, WINDOW_WIDTH / 2 - PLATFORM_WIDTH / 2, 100),
+    Platform(screen, WINDOW_WIDTH / 2 - PLATFORM_WIDTH / 2, 200),
+    Platform(screen, WINDOW_WIDTH / 2 - PLATFORM_WIDTH / 2, 300),
+    Platform(screen, WINDOW_WIDTH / 2 - PLATFORM_WIDTH / 2, 400),
+  ]
 
   def handleKeyDown(event):
     if event.key == 32: # space bar
@@ -55,6 +74,8 @@ def main():
 
     screen.fill((0, 0, 0))
     ball.update(dt)
+    for platform in platforms:
+      platform.update()
     pygame.display.flip()
 
 if __name__ == "__main__":
