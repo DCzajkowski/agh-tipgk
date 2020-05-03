@@ -16,7 +16,7 @@ class Ball:
     self.screen = screen
 
   def collide_with_walls(self):
-    ball_bottom = pygame.Rect(self.position.x - BALL_RADIUS, self.position.y + BALL_RADIUS - 1, BALL_RADIUS * 2, 1)
+    ball_bottom = pygame.Rect(self.position.x - BALL_RADIUS, self.position.y + BALL_RADIUS, BALL_RADIUS * 2, 1)
 
     z = self.platforms
     z = filter(lambda p: p.rect != None, z)
