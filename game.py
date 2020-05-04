@@ -18,12 +18,7 @@ class Ball:
   def collide_with_walls(self):
     ball_bottom = pygame.Rect(self.position.x - BALL_RADIUS, self.position.y + BALL_RADIUS, BALL_RADIUS * 2, 1)
 
-    z = self.platforms
-    z = filter(lambda p: p.rect != None, z)
-    z = map(lambda p: p.rect, z)
-    z = list(z)
-
-    if ball_bottom.collidelist(z) != -1 and self.velocity.y > 0:
+    if ball_bottom.collidelist(list(map(lambda p: p.rect, self.platforms))) != -1 and self.velocity.y > 0:
       self.velocity = Vector2(0, 0)
 
   def move(self, dt):
@@ -87,9 +82,9 @@ def main():
         handleKeyDown(event)
 
     screen.fill((0, 0, 0))
-    ball.update(dt)
     for platform in platforms:
       platform.update()
+    ball.update(dt)
     pygame.display.flip()
 
 if __name__ == "__main__":
